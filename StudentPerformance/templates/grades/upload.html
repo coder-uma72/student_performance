@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Grades</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <h2>Student Performance Analytics</h2>
+
+    <div>
+        <a href="/students">Students</a>
+        <a href="/courses">Courses</a>
+        <a href="/grades">Grades</a>
+        <a href="/analytics">Analytics</a>
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <div class="upload-box">
+
+        <h1>Upload Grade CSV</h1>
+
+        <p style="margin: 15px 0;">
+            Upload a CSV file containing student grade information.
+        </p>
+
+        <form method="POST"
+              action="/grades/upload"
+              enctype="multipart/form-data">
+
+            <div class="form-group">
+
+                <label>Select CSV File</label>
+
+                <input type="file"
+                       name="file"
+                       accept=".csv"
+                       required>
+
+            </div>
+
+            <button type="submit"
+                    class="btn btn-success">
+                Upload CSV
+            </button>
+
+            <a href="/grades"
+               class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

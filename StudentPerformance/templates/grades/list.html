@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grades</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <h2>Student Performance Analytics</h2>
+
+    <div>
+        <a href="/students">Students</a>
+        <a href="/courses">Courses</a>
+        <a href="/grades">Grades</a>
+        <a href="/analytics">Analytics</a>
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h1>Grades</h1>
+
+        <div class="action-buttons">
+
+            <a href="/grades/new"
+               class="btn btn-success">
+                + Add Grade
+            </a>
+
+            <a href="/grades/upload"
+               class="btn btn-primary">
+                Upload CSV
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        {% if grades %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for grade in grades %}
+
+                <tr>
+
+                    <td>{{ grade.id }}</td>
+
+                    <td>
+                        {{ grade.student.name }}
+                    </td>
+
+                    <td>
+                        {{ grade.course.name }}
+                        ({{ grade.course.code }})
+                    </td>
+
+                    <td>
+                        {{ grade.score }}
+                    </td>
+
+                    <td>
+                        {{ grade.date }}
+                    </td>
+
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <a href="/grades/{{ grade.id }}/edit"
+                               class="btn btn-primary">
+                                Edit
+                            </a>
+
+                            <form method="POST"
+                                  action="/grades/{{ grade.id }}">
+
+                                <input type="hidden"
+                                       name="_method"
+                                       value="DELETE">
+
+                                <button type="submit"
+                                        class="btn btn-danger"
+                                        onclick="return confirm('Delete this grade?');">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>No grade records found.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

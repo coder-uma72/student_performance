@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <h2>Student Performance Analytics</h2>
+
+    <div>
+        <a href="/students">Students</a>
+        <a href="/courses">Courses</a>
+        <a href="/grades">Grades</a>
+        <a href="/analytics">Analytics</a>
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h1>Analytics Dashboard</h1>
+
+        <div>
+            <a href="/grades/upload" class="btn btn-success">
+                Upload CSV
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- Filters -->
+
+    <div class="filter-box">
+
+        <h2>Filters</h2>
+
+        <form method="GET" action="/analytics">
+
+            <div class="form-group">
+
+                <label>Course</label>
+
+                <select name="course">
+
+                    <option value="">All Courses</option>
+
+                    {% for course in courses %}
+
+                    <option value="{{ course.id }}"
+                        {% if selected_course == course.id|string %}selected{% endif %}>
+
+                        {{ course.name }} - {{ course.code }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Student</label>
+
+                <select name="student">
+
+                    <option value="">All Students</option>
+
+                    {% for student in students %}
+
+                    <option value="{{ student.id }}"
+                        {% if selected_student == student.id|string %}selected{% endif %}>
+
+                        {{ student.name }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">
+                Apply Filters
+            </button>
+
+            <a href="/analytics" class="btn btn-secondary">
+                Clear
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- Statistics -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <h3>Mean</h3>
+
+            <p>
+                {{ mean }}
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Median</h3>
+
+            <p>
+                {{ median }}
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Standard Deviation</h3>
+
+            <p>
+                {{ std }}
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Total Grades</h3>
+
+            <p>
+                {{ total_grades }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Average by Course -->
+
+    <div class="card">
+
+        <h2>Average Score by Course</h2>
+
+        {% if course_averages %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Course</th>
+                    <th>Average Score</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in course_averages %}
+
+                <tr>
+
+                    <td>
+                        {{ item.course }}
+                    </td>
+
+                    <td>
+                        {{ "%.2f"|format(item.average) }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>No course analytics available.</p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Student Rankings -->
+
+    <div class="card">
+
+        <h2>Student Rankings</h2>
+
+        {% if rankings %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Rank</th>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Average Score</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in rankings %}
+
+                <tr>
+
+                    <td>
+                        {{ item.rank }}
+                    </td>
+
+                    <td>
+                        {{ item.student }}
+                    </td>
+
+                    <td>
+                        {{ item.course }}
+                    </td>
+
+                    <td>
+                        {{ "%.2f"|format(item.average) }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>No student ranking data available.</p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Grade Details -->
+
+    <div class="card">
+
+        <h2>Grade Analysis</h2>
+
+        {% if grades %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for grade in grades %}
+
+                <tr>
+
+                    <td>
+                        {{ grade.student.name }}
+                    </td>
+
+                    <td>
+                        {{ grade.course.name }}
+                    </td>
+
+                    <td>
+                        {{ grade.score }}
+                    </td>
+
+                    <td>
+                        {{ grade.date }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>No grade records available.</p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Export -->
+
+    <div class="card">
+
+        <h2>Export Reports</h2>
+
+        <p style="margin-bottom: 15px;">
+            Download the analytics report for further analysis.
+        </p>
+
+        <a href="/analytics/export/csv"
+           class="btn btn-primary">
+
+            Export CSV
+
+        </a>
+
+        <a href="/analytics/export/excel"
+           class="btn btn-success">
+
+            Export Excel
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Details</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <h2>Student Performance Analytics</h2>
+
+    <div>
+        <a href="/students">Students</a>
+        <a href="/courses">Courses</a>
+        <a href="/grades">Grades</a>
+        <a href="/analytics">Analytics</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h1>Course Details</h1>
+
+        <a href="/courses" class="btn btn-secondary">
+            Back to Courses
+        </a>
+
+    </div>
+
+    <div class="info-card">
+
+        <div class="info-row">
+            <strong>Course ID</strong>
+            <span>{{ course.id }}</span>
+        </div>
+
+        <div class="info-row">
+            <strong>Course Name</strong>
+            <span>{{ course.name }}</span>
+        </div>
+
+        <div class="info-row">
+            <strong>Course Code</strong>
+            <span>{{ course.code }}</span>
+        </div>
+
+    </div>
+
+    <a href="/courses/{{ course.id }}/edit"
+       class="btn btn-primary">
+        Edit Course
+    </a>
+
+</div>
+
+</body>
+</html>

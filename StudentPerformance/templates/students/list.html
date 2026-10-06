@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Students</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Student Performance Analytics</h2>
+
+    <div>
+        <a href="/students/view">Students</a>
+        <a href="/courses">Courses</a>
+        <a href="/grades">Grades</a>
+        <a href="/analytics/dashboard">Analytics</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Students</h1>
+
+        <form method="GET" action="/students/view" class="search-box">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search by name or email"
+                value="{{ search }}"
+            >
+
+            <button type="submit" class="btn-primary">
+                Search
+            </button>
+
+            <a href="/students/view" class="btn btn-secondary">
+                Clear
+            </a>
+
+            <a href="/students/new" class="btn btn-success">
+                Add Student
+            </a>
+
+        </form>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for student in students %}
+
+                <tr>
+
+                    <td>{{ student.id }}</td>
+
+                    <td>{{ student.name }}</td>
+
+                    <td>{{ student.email }}</td>
+
+                    <td>
+
+                        <a
+                            href="/students/{{ student.id }}"
+                            class="btn btn-primary">
+                            View
+                        </a>
+
+                        <a
+                            href="/students/{{ student.id }}/edit"
+                            class="btn btn-success">
+                            Edit
+                        </a>
+
+                        <a
+                            href="/students/{{ student.id }}/delete"
+                            class="btn btn-danger">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="4">
+                        No students found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

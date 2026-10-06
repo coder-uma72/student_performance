@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Courses</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <h2>Student Performance Analytics</h2>
+
+    <div>
+        <a href="/students/view">Students</a>
+        <a href="/courses">Courses</a>
+        <a href="/grades">Grades</a>
+        <a href="/analytics">Analytics</a>
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h1>Courses</h1>
+
+        <a href="/courses/new"
+           class="btn btn-success">
+            + Add Course
+        </a>
+
+    </div>
+
+    <div class="card">
+
+        {% if courses %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Course Name</th>
+                    <th>Course Code</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for course in courses %}
+
+                <tr>
+
+                    <td>{{ course.id }}</td>
+
+                    <td>{{ course.name }}</td>
+
+                    <td>{{ course.code }}</td>
+
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <a href="/courses/{{ course.id }}"
+                               class="btn btn-secondary">
+                                View
+                            </a>
+
+                            <a href="/courses/{{ course.id }}/edit"
+                               class="btn btn-primary">
+                                Edit
+                            </a>
+
+                            <form method="POST"
+                                  action="/courses/{{ course.id }}">
+
+                                <input type="hidden"
+                                       name="_method"
+                                       value="DELETE">
+
+                                <button type="submit"
+                                        class="btn btn-danger"
+                                        onclick="return confirm('Delete this course?');">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>No courses found.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

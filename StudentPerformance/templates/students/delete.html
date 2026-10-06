@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Student</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Student Performance Analytics</h2>
+
+    <div>
+        <a href="/students/view">Students</a>
+        <a href="/courses">Courses</a>
+        <a href="/grades">Grades</a>
+        <a href="/analytics/dashboard">Analytics</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Delete Student</h1>
+
+        <p>
+            Are you sure you want to delete
+            <strong>{{ student.name }}</strong>?
+        </p>
+
+        <p>
+            This will also delete the student's associated grades.
+        </p>
+
+        <br>
+
+        <form
+            method="POST"
+            action="/students/{{ student.id }}">
+
+            <input
+                type="hidden"
+                name="_method"
+                value="DELETE"
+            >
+
+            <button
+                type="submit"
+                class="btn btn-danger">
+                Confirm Delete
+            </button>
+
+            <a
+                href="/students/view"
+                class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

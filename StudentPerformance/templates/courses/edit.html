@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Course</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <h2>Student Performance Analytics</h2>
+
+    <div>
+        <a href="/students">Students</a>
+        <a href="/courses">Courses</a>
+        <a href="/grades">Grades</a>
+        <a href="/analytics">Analytics</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Edit Course</h1>
+
+        <form method="POST"
+              action="/courses/{{ course.id }}">
+
+            <input type="hidden"
+                   name="_method"
+                   value="PUT">
+
+            <div class="form-group">
+                <label>Course Name</label>
+
+                <input type="text"
+                       name="name"
+                       value="{{ course.name }}"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Course Code</label>
+
+                <input type="text"
+                       name="code"
+                       value="{{ course.code }}"
+                       required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Update Course
+            </button>
+
+            <a href="/courses" class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

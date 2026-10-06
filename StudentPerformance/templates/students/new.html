@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Student</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Student Performance Analytics</h2>
+
+    <div>
+        <a href="/students/view">Students</a>
+        <a href="/courses">Courses</a>
+        <a href="/grades">Grades</a>
+        <a href="/analytics/dashboard">Analytics</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Add Student</h1>
+
+        <form method="POST" action="/students">
+
+            <div class="form-group">
+                <label>Name</label>
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter student name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter student email"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                Add Student
+            </button>
+
+            <a href="/students/view" class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
